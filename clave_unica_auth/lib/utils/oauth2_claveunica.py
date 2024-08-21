@@ -20,7 +20,7 @@ def get_url_params_authorization_code(client_id, redirect_uri, state=uuid.uuid4(
     return encode_dict_to_uri({
         'client_id': client_id,
         'response_type': 'code',
-        'scope': 'openid run name email',
+        'scope': 'openid run name',
         'redirect_uri': redirect_uri,
         'state': state,
     })
