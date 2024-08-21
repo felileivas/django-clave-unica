@@ -13,7 +13,7 @@ def encode_dict_to_uri(params):
 
 def join_url_with_params(url, params):
     """genera la url de redireccion a clave unica"""
-    return '{url}?{params}'.format(url=url, params=params)
+    return f'{url}?{params}'
 
 def get_url_params_authorization_code(client_id, redirect_uri, state=uuid.uuid4()):
     """obtiene los parametros encodeado en url que seran enviados para solicitar el authorization_code Clave Unica"""
@@ -41,15 +41,15 @@ def get_headers_authorization_code():
     return {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json',
-        'User-Agent': 'My User Agent 1.0'
+        'User-Agent': 'Django Agent 1.0'
     }
 
 def get_headers_bearer_token(access_token):
     """obtiene los headers para autenticacion bearer oauth2"""
     return {
-        'Authorization': 'Bearer {access_token}'.format(access_token=access_token),
+        'Authorization': f'Bearer {access_token}',
         'Accept': 'application/json',
-        'User-Agent': 'My User Agent 1.0'
+        'User-Agent': 'Django Agent 1.0'
     }
 
 def get_url_login_claveunica(url, client_id, redirect_uri, state=uuid.uuid4()):
@@ -60,12 +60,12 @@ def request_authorization_code(url, client_id, client_secret, redirect_uri, code
     """solicitud POST authorization_code a Clave Unica"""
     resp = requests.post(url, data=get_params_access_token(client_id, client_secret, redirect_uri, code, state), headers=get_headers_authorization_code())
     if resp.status_code != 200:
-        raise Exception('Clave Unica http status error: {status_code}. Error al obtener authorization_code de Clave Unica.'.format(status_code=resp.status_code))
+        raise Exception(f'Clave Unica http status error: {status_code}. Error al obtener authorization_code de Clave Unica.')
     return resp.json()
     
 def request_info_user(url, access_token):
     """solicitud POST para obtencion de informacion del usuario en Clave Unica"""
     resp = requests.post(url, headers=get_headers_bearer_token(access_token))
     if resp.status_code != 200:
-        raise Exception('Clave Unica http status error: {status_code}. Error al obtener infouser de Clave Unica.'.format(status_code=resp.status_code))
+        raise Exception(f'Clave Unica http status error: {status_code}. Error al obtener infouser de Clave Unica.')
     return resp.json()
