@@ -38,7 +38,7 @@ class Person(models.Model):
         """parsea un json y retorna una instancia nueva de User"""
         run = info_user_json['RolUnico']['numero']
         dv = info_user_json['RolUnico']['DV']
-        email = info_user_json['email']
+        email = '' #info_user_json['email']
         runWithDV = str(run) + '-' + str(dv)
         first_name = ' '.join(info_user_json['name']['nombres'])
         last_name = ' '.join(info_user_json['name']['apellidos'])
