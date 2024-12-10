@@ -1,149 +1,111 @@
-# Django Clave Unica
+# Django Clave Única
 
-Aplicación Django que permite la autenticación de los ciudadanos de Chile.
+Aplicación Django para la autenticación de ciudadanos chilenos mediante **Clave Única**.  
+Este proyecto está diseñado para integrarse fácilmente con el sistema de identidad digital de Clave Única, garantizando una autenticación segura y centralizada.
 
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-clave-unica.svg)
-![PyPI - Django Version](https://img.shields.io/pypi/djversions/django-clave-unica.svg)
-![PyPI - Format](https://img.shields.io/pypi/format/django-clave-unica.svg)
+Este proyecto es una versión derivada de https://github.com/GatoSnake/django-clave-unica, que está licenciado bajo la licencia ISC. Las modificaciones realizadas por Ticraft.cl están licenciadas bajo GNU GPL v3.
 
-[![GitHub release](https://img.shields.io/github/release/gatosnake/django-clave-unica.svg)](https://github.com/GatoSnake/django-clave-unica/releases/)
-[![GitHub tag](https://img.shields.io/github/tag/gatosnake/django-clave-unica.svg)](https://github.com/GatoSnake/django-clave-unica/tags/)
-[![GitHub license](https://img.shields.io/github/license/gatosnake/django-clave-unica.svg)](https://github.com/GatoSnake/django-clave-unica/blob/master/LICENSE)
-[![Github all releases](https://img.shields.io/github/downloads/gatosnake/django-clave-unica/total.svg)](https://github.com/GatoSnake/django-clave-unica/releases/)
+Este repositorio es una versión actualizada y mantenida activamente por [Ticraft.cl](https://ticraft.cl), adaptada para soportar:
 
-## Codigo Fuente
+- **Python** >= 3.11
+- **Django** >= 5.0
 
-El código fuente de la aplicación lo puedes obtener de la siguiente url en Github:
-https://github.com/GatoSnake/django-clave-unica
+## 🚀 Funcionalidades
+- Autenticación basada en OAuth2 con Clave Única.
+- Creación automática de usuarios a partir de los datos proporcionados por Clave Única.
+- Gestión de sesiones segura y configurable.
+- Configuraciones flexibles para personalizar URLs, tiempos de expiración y comportamientos.
 
-Si esta aplicación te fue de ayuda, no dudes en compartirlo y hacermelo saber. :blush: :beers:
+## 🛠 Instalación
 
-Además, esta abierto para que hagan sus pull requests en casos de realizar mejoras al código. :sunglasses:
+Sigue estos pasos para instalar y configurar el proyecto:
 
-## Instalación
+1. **Instala el paquete**:
+   ```bash
+   pip install django-clave-unica
+   ```
 
-1. Descarga e instala el paquete utilizando `pipenv` o `pip` de la siguiente manera:
-```
-pip install django-clave-unica
-```
+2. **Configura tu aplicación**:
+   En el archivo `settings.py`, añade:
+   ```python
+   INSTALLED_APPS = [
+       ...
+       'clave_unica_auth',
+   ]
 
-2. Agrega la aplicación `clave_unica_auth` en el parámetro INSTALLED_APPS de tu archivo `settings.py`, 
-de la siguiente manera:
-```python
-INSTALLED_APPS = [
-	...
-	'clave_unica_auth',
-]
-```
+   CLAVE_UNICA = {
+       'CLIENT_ID': 'tu_client_id',
+       'CLIENT_SECRET': 'tu_client_secret',
+       'REDIRECT_URI': 'tu_redirect_uri',
+   }
+   ```
 
-3. Incluir las credenciales de la aplicación para la autenticación de los usuarios. Como parámetros mínimos, debe ingresar en el archivo `settings.py` lo siguiente:
-```python
-CLAVE_UNICA = {
-    'CLIENT_ID': 'client_id',
-    'CLIENT_SECRET': 'client_secret',
-    'REDIRECT_URI': 'redirect_uri',
-}
-```
-**Para obtener tus credenciales de integración con Clave Única, accede a https://claveunica.gob.cl/institucional.**
+3. **Incluye las rutas**:
+   En el archivo `urls.py`, añade:
+   ```python
+   from django.urls import include, path
 
-4. Incluye la ruta de autenticación Clave Única en el archivo `urls.py` de tu proyecto, 
-de la siguiente manera:
-```python
-urlpatterns = [
-		...
-	path('claveunica/', include('clave_unica_auth.urls')),
-	...
-]
-```
+   urlpatterns = [
+       ...
+       path('claveunica/', include('clave_unica_auth.urls')),
+   ]
+   ```
 
-5. Ejecutar `python manage.py migrate` para migrar el modelo de personas de Clave Unica a la base de datos.
+4. **Aplica migraciones**:
+   ```bash
+   python manage.py migrate
+   ```
 
-6. Ejecutar el servidor de desarrollo y acceder a http://127.0.0.1:8000/claveunica/login para realizar el proceso de autenticación.
+5. **Inicia el servidor de desarrollo**:
+   ```bash
+   python manage.py runserver
+   ```
 
-## Funcionamiento
+Accede a [http://127.0.0.1:8000/claveunica/login](http://127.0.0.1:8000/claveunica/login) para probar el inicio de sesión.
 
-1. Cuando un usuario iniciar sesión contra Clave Única, el sistema lo redirige al portal de autenticación creando para esa sesion de autenticación un parámetro llamado `state` en formato UUIDv4, en el cual dura 30 minutos y se guarda en el cache por defecto de Django. 
-2. Si las credenciales del usuario son correctas, Clave Única redirige nuevamente al usuario a la aplicación a través de una URL callback que es registrada por el dueño de la aplicación en en registro de instituciones de clave Única (https://claveunica.gob.cl/institucional).
-3. El sistema verifica el parametro `state`, si no ha expirado entonces verifica si el usuario existe en base de datos. En caso de no existir lo crea automaticamente y lo dirige a la vista ya autenticada.
+---
 
-A nivel de base de datos, la estructura de los datos esta compuesta de la siguiente manera:
-* La columna `username` de la tabla de usuario de Django posee la información del RUN de la persona.
-* La información de la persona, como el RUN y el DV esta guardada en la tabla `clave_unica_auth_person`, en el cual esta asociada a la tabla de usuarios de Django.
-* La tabla `clave_unica_auth_login` posee el registro de todos los intentos de inicios de sesión. En ella se guarda la fecha, dirección IP remoto, el parámetro state, el resultado de la autenticación y el usuario asociado si este existe en BD.
+## 🧑‍💻 Configuraciones Avanzadas
 
-## Otras configuraciones
+### Clave Única
+Puedes personalizar el comportamiento del sistema mediante las siguientes configuraciones en `settings.py`:
 
-### CLAVEUNICA_URL_LOGIN
-Url de login en Clave Única.
-```
-Type: string
-Default: https://accounts.claveunica.gob.cl/openid/authorize
-```
-### CLAVEUNICA_URL_LOGOUT
-Url de logout Clave Única.
-```
-Type: string
-Default: https://api.claveunica.gob.cl/api/v1/accounts/app/logout
-```
-### CLAVEUNICA_REMEMBER_LOGIN
-Recuerda la autenticación del usuario de Clave Única.
-```
-Type: boolean
-Default: False
-```
-NOTA: Para no recordar la autenticación del usuario, se realiza el truco de abrir un iframe escondido en el html con la url del parámetro `CLAVEUNICA_URL_LOGOUT`.
-### CLAVEUNICA_TOKEN_URI
-Url intercambio autorization_code a access_token en Clave Única.
-```
-Type: string
-Default:  https://accounts.claveunica.gob.cl/openid/token
-```
-### CLAVEUNICA_USERINFO_URI
-Url para obtención de información del usuario en Clave Única.
-```
-Type: string
-Default:  https://accounts.claveunica.gob.cl/openid/userinfo
-```
-### CLAVEUNICA_STATE_TIMEOUT
-Tiempo en segundos que dura el parámetro `state` antes de realizar la autenticación en Clave Única.
-```
-Type: int
-Default:  1800
-```
-### CLAVEUNICA_AUTO_CREATE_USER
-Crea automaticamente al usuario si no existe en BD.
-```
-Type: boolean
-Default:  True
-```
-### CLAVEUNICA_PATH_LOGIN
-Url path para login Clave Única.
-```
-Type: string
-Default:  login/
-```
-### CLAVEUNICA_PATH_REDIRECT
-Url path redirect desde Clave Única.
-```
-Type: string
-Default:  callback/
-```
-### CLAVEUNICA_PATH_SUCCESS_LOGIN
-Url path a vista que se redirige despues de hacer login correctamente.
-```
-Type: string
-Default:  /home/
-```
-### CLAVEUNICA_HTML_ERROR
-Path archivo error html.
-```
-Type: string
-Default:  clave_unica_auth/error.html
-```
+| Configuración                 | Tipo    | Predeterminado                                            | Descripción                                   |
+|-------------------------------|---------|----------------------------------------------------------|-----------------------------------------------|
+| `CLIENT_ID`                   | string  | -                                                        | ID del cliente proporcionado por Clave Única.|
+| `CLIENT_SECRET`               | string  | -                                                        | Clave secreta del cliente.                   |
+| `REDIRECT_URI`                | string  | -                                                        | URL de redirección registrada en Clave Única.|
+| `CLAVEUNICA_URL_LOGIN`        | string  | `https://accounts.claveunica.gob.cl/openid/authorize`    | URL de login de Clave Única.                 |
+| `CLAVEUNICA_URL_LOGOUT`       | string  | `https://api.claveunica.gob.cl/api/v1/accounts/app/logout` | URL de logout de Clave Única.                |
+| `CLAVEUNICA_REMEMBER_LOGIN`   | boolean | `False`                                                  | Permite recordar la sesión.                  |
+| `CLAVEUNICA_STATE_TIMEOUT`    | int     | `1800` (30 minutos)                                      | Tiempo de expiración del parámetro `state`.  |
+| `CLAVEUNICA_AUTO_CREATE_USER` | boolean | `True`                                                   | Crea usuarios automáticamente.               |
 
-## Changelog
+Consulta la documentación oficial en [claveunica.gob.cl](https://claveunica.gob.cl/institucional) para obtener tus credenciales.
 
-* **1.0.1** [14/07/19]
-	* Se cambia la configuracion Clave Única a tipo diccionario en settings.py.
-* **1.0.0** [07/07/19]
-	* Permite la autenticación de los usuarios via Clave Única.
+---
+
+## 📖 Documentación
+
+- **Ejemplos de uso**: Ver el directorio `example/`.
+- **Changelog**: Todas las actualizaciones están documentadas en el archivo `CHANGELOG.md`.
+
+---
+
+## 🤝 Contribuir
+
+¡Las contribuciones son bienvenidas! Sigue estos pasos para colaborar:
+
+1. Haz un fork del repositorio.
+2. Crea una nueva rama para tu funcionalidad o corrección de errores (`git checkout -b mi-nueva-funcionalidad`).
+3. Realiza tus cambios y escribe pruebas para los mismos.
+4. Envía un pull request explicando tu contribución.
+
+---
+
+## 🧾 Licencia
+
+Este proyecto está licenciado bajo la **GNU General Public License v3 (GPLv3)**. Consulta el archivo `LICENSE` para más información.
+
+---
+

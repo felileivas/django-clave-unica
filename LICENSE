@@ -1,3 +1,8 @@
+Este proyecto contiene código bajo las siguientes licencias:
+
+1. Código original bajo ISC License:
+   Copyright (c) [year], [fullname]
+
 ISC License
 
 Copyright (c) [year], [fullname]
@@ -13,3 +18,19 @@ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
 WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+2. Modificaciones y nuevas contribuciones bajo GNU General Public License v3:
+   Copyright (C) 2024 Ticraft.cl.
+
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2024 Ticraft.cl
+Este programa es software libre: puedes redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General de GNU publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia, o (a tu elección) cualquier versión posterior.
+
+Este programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita de COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulta la Licencia Pública General de GNU para más detalles.
+
+Deberías haber recibido una copia de la Licencia Pública General de GNU junto con este programa. Si no, visita <https://www.gnu.org/licenses/>.
+
+Para consultas relacionadas con esta licencia, visita: <https://ticraft.cl>
