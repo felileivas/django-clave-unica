@@ -7,8 +7,8 @@ Este proyecto es una versión derivada de https://github.com/GatoSnake/django-cl
 
 Este repositorio es una versión actualizada y mantenida activamente por [Ticraft.cl](https://ticraft.cl), adaptada para soportar:
 
-- **Python** >= 3.11
-- **Django** >= 5.0
+- **Python** >= 3.12.7
+- **Django** >= 5.1.1
 
 ## 🚀 Funcionalidades
 - Autenticación basada en OAuth2 con Clave Única.
@@ -75,19 +75,25 @@ Puedes personalizar el comportamiento del sistema mediante las siguientes config
 | `CLIENT_ID`                   | string  | -                                                        | ID del cliente proporcionado por Clave Única.|
 | `CLIENT_SECRET`               | string  | -                                                        | Clave secreta del cliente.                   |
 | `REDIRECT_URI`                | string  | -                                                        | URL de redirección registrada en Clave Única.|
-| `CLAVEUNICA_URL_LOGIN`        | string  | `https://accounts.claveunica.gob.cl/openid/authorize`    | URL de login de Clave Única.                 |
-| `CLAVEUNICA_URL_LOGOUT`       | string  | `https://api.claveunica.gob.cl/api/v1/accounts/app/logout` | URL de logout de Clave Única.                |
-| `CLAVEUNICA_REMEMBER_LOGIN`   | boolean | `False`                                                  | Permite recordar la sesión.                  |
-| `CLAVEUNICA_STATE_TIMEOUT`    | int     | `1800` (30 minutos)                                      | Tiempo de expiración del parámetro `state`.  |
-| `CLAVEUNICA_AUTO_CREATE_USER` | boolean | `True`                                                   | Crea usuarios automáticamente.               |
+| `URL_LOGIN`                   | string  | `https://accounts.claveunica.gob.cl/openid/authorize`    | URL para login en Clave Única.               |
+| `URL_LOGOUT`                  | string  | `https://api.claveunica.gob.cl/api/v1/accounts/app/logout` | URL para logout en Clave Única.              |
+| `REMEMBER_LOGIN`              | boolean | `False`                                                  | Permite recordar la sesión del usuario.      |
+| `TOKEN_URI`                   | string  | `https://accounts.claveunica.gob.cl/openid/token`        | URL para intercambiar `authorization_code` por `access_token`. |
+| `USERINFO_URI`                | string  | `https://accounts.claveunica.gob.cl/openid/userinfo`     | URL para obtener información del usuario.    |
+| `STATE_TIMEOUT`               | int     | `1800` (30 minutos)                                      | Tiempo de expiración del parámetro `state`.  |
+| `AUTO_CREATE_USER`            | boolean | `True`                                                   | Crea automáticamente al usuario si no existe.|
+| `PATH_LOGIN`                  | string  | `login/`                                                 | Path interno hacia la vista de login.        |
+| `PATH_REDIRECT`               | string  | `callback/`                                              | Path interno para redirección desde Clave Única. |
+| `PATH_SUCCESS_LOGIN`          | string  | `/home/`                                                 | Path interno tras inicio de sesión exitoso.  |
+| `HTML_ERROR`                  | string  | `clave_unica_auth/error.html`                            | Path al archivo HTML para errores.           |
 
-Consulta la documentación oficial en [claveunica.gob.cl](https://claveunica.gob.cl/institucional) para obtener tus credenciales.
+Consulta la documentación oficial en [https://digital.gob.cl/](https://digital.gob.cl/transformacion-digital/estandares-y-guias/guia-tecnica-para-integracion-de-claveunica/) para obtener tus credenciales.
 
 ---
 
 ## 📖 Documentación
 
-- **Ejemplos de uso**: Ver el directorio `example/`.
+- **Ejemplos de uso**: Ver el directorio `exampleDjango2.2.3/`.
 - **Changelog**: Todas las actualizaciones están documentadas en el archivo `CHANGELOG.md`.
 
 ---

@@ -1,39 +1,48 @@
 import os
 from setuptools import find_packages, setup
 
-with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
+# Leer el contenido del archivo README.md
+with open(os.path.join(os.path.dirname(__file__), 'README.md'), encoding='utf-8') as readme:
     README = readme.read()
 
-# allow setup.py to be run from any path
+# Cambiar al directorio del archivo
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
+# Configuración del paquete
 setup(
     name='django-clave-unica',
-    version='1.0.1',
+    version='2.0.0',
     packages=find_packages(),
     include_package_data=True,
-    license='BSD License',  # example license
-    description='Aplicacion Django para integración con autenticación Clave Única',
+    license='GNU General Public License v3 (GPLv3)',
+    description='Aplicación Django para integración con autenticación Clave Única',
     long_description=README,
-    url='https://github.com/GatoSnake',
-    author='Cristhian Won',
-    author_email='cristhian.won@gmail.com',
-    long_description_content_type="text/markdown",
+    long_description_content_type='text/markdown',
+    url='https://ticraft.cl',
+    author='Ticraft.cl',
+    author_email='felipe@ticraft.cl',
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 2.2',
+        'Framework :: Django :: 5.1',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
+    python_requires='>=3.12.7',
     install_requires=[
-        'requests>=2.22.0',
-        'urllib3>=1.25.3'
+        'django>=5.1.1',
+        'requests==2.32.3',
+        'urllib3==2.2.3'
     ],
+    project_urls={
+        'Documentation': 'https://github.com/felileivas/django-clave-unica',
+        'Source': 'https://github.com/felileivas/django-clave-unica',
+        'Tracker': 'https://github.com/felileivas/django-clave-unica/issues',
+    },
 )

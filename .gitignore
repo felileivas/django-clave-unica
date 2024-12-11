@@ -3,3 +3,4 @@ dist
 Pipfile.lock
 *.egg-info
 *.sqlite3
+__pycache__/
