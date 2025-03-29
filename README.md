@@ -22,7 +22,7 @@ Sigue estos pasos para instalar y configurar el proyecto:
 
 1. **Instala el paquete**:
    ```bash
-   pip install django-clave-unica
+   pip install git+https://github.com/felileivas/django-clave-unica.git
    ```
 
 2. **Configura tu aplicación**:
