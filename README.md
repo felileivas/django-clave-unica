@@ -82,6 +82,8 @@ Puedes personalizar el comportamiento del sistema mediante las siguientes config
 | `USERINFO_URI`                | string  | `https://accounts.claveunica.gob.cl/openid/userinfo`     | URL para obtener información del usuario.    |
 | `STATE_TIMEOUT`               | int     | `1800` (30 minutos)                                      | Tiempo de expiración del parámetro `state`.  |
 | `AUTO_CREATE_USER`            | boolean | `True`                                                   | Crea automáticamente al usuario si no existe.|
+| `OAUTH_SCOPE`                 | string  | `'openid run name'`                                      | Scope de OAuth2 para la solicitud a Clave Única. |
+| `USER_AGENT`                  | string  | `'Django ClaveUnica Auth Client 1.0'`                    | User-Agent enviado en las solicitudes a Clave Única. |
 | `PATH_LOGIN`                  | string  | `login/`                                                 | Path interno hacia la vista de login.        |
 | `PATH_REDIRECT`               | string  | `callback/`                                              | Path interno para redirección desde Clave Única. |
 | `PATH_SUCCESS_LOGIN`          | string  | `/home/`                                                 | Path interno tras inicio de sesión exitoso.  |
