@@ -93,7 +93,7 @@ Consulta la documentación oficial en [https://digital.gob.cl/](https://digital.
 
 ## 📖 Documentación
 
-- **Ejemplos de uso**: Ver el directorio `exampleDjango2.2.3/`.
+- **Ejemplos de uso**: Ver los directorios `exampleDjango2.2.3/` y `exampleDjango5/`.
 - **Changelog**: Todas las actualizaciones están documentadas en el archivo `CHANGELOG.md`.
 
 ---
