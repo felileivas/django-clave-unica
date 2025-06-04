@@ -38,6 +38,8 @@ Sigue estos pasos para instalar y configurar el proyecto:
        'CLIENT_SECRET': 'tu_client_secret',
        'REDIRECT_URI': 'tu_redirect_uri',
    }
+   # El resto de las opciones son opcionales y cuentan con valores
+   # predeterminados en la librería.
    ```
 
 3. **Incluye las rutas**:

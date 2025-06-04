@@ -19,8 +19,10 @@ def join_url_with_params(url, params):
     return f'{url}?{params}'
 
 
-def get_url_params_authorization_code(client_id, redirect_uri, state=uuid.uuid4()):
+def get_url_params_authorization_code(client_id, redirect_uri, state=None):
     """obtiene los parametros encodeado en url que seran enviados para solicitar el authorization_code Clave Unica"""
+    if state is None:
+        state = generate_state()
     return encode_dict_to_uri({
         'client_id': client_id,
         'response_type': 'code',
@@ -30,8 +32,10 @@ def get_url_params_authorization_code(client_id, redirect_uri, state=uuid.uuid4(
     })
 
 
-def get_params_access_token(client_id, client_secret, redirect_uri, code, state=uuid.uuid4()):
+def get_params_access_token(client_id, client_secret, redirect_uri, code, state=None):
     """obtiene los parametros encodeado en url que seran enviados para solicitar el access_token Clave Unica"""
+    if state is None:
+        state = generate_state()
     return {
         'client_id': client_id,
         'client_secret': client_secret,
@@ -59,13 +63,17 @@ def get_headers_bearer_token(access_token):
     }
 
 
-def get_url_login_claveunica(url, client_id, redirect_uri, state=uuid.uuid4()):
+def get_url_login_claveunica(url, client_id, redirect_uri, state=None):
     """obtiene la url que redirige a clave unica para login"""
+    if state is None:
+        state = generate_state()
     return join_url_with_params(url, get_url_params_authorization_code(client_id, redirect_uri, state))
 
 
-def request_authorization_code(url, client_id, client_secret, redirect_uri, code, state=uuid.uuid4()):
+def request_authorization_code(url, client_id, client_secret, redirect_uri, code, state=None):
     """solicitud POST authorization_code a Clave Unica"""
+    if state is None:
+        state = generate_state()
     resp = requests.post(url, data=get_params_access_token(client_id, client_secret, redirect_uri, code, state), headers=get_headers_authorization_code())
     if resp.status_code != 200:
          raise Exception(
