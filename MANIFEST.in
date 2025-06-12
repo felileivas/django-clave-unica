@@ -1,5 +1,4 @@
 include LICENSE
-include README.rst
+include README.md
 recursive-include clave_unica_auth/lib *
 recursive-include clave_unica_auth/templates *
-recursive-include docs *
